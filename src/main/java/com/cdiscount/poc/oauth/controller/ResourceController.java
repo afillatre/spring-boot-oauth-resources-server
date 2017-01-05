@@ -6,13 +6,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/resources")
 public class ResourceController {
 
-    @RequestMapping(value="ping", method=RequestMethod.GET)
-    public String ping() {
-        return "pong";
+    @RequestMapping("/code")
+    public String getCode(HttpServletRequest request) {
+        return request.getParameter("code");
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
