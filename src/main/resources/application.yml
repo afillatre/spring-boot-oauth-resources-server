@@ -3,6 +3,8 @@ security:
     client:
       accessTokenUri: http://localhost:9999/oauth/token
       userAuthorizationUri: http://localhost:9999/oauth/authorize
+    resource:
+      userInfoUri: http://localhost:9999/user
 logging:
   level:
     org.springframework.web: TRACE
