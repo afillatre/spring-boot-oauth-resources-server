@@ -5,6 +5,13 @@ security:
       userAuthorizationUri: http://localhost:9999/oauth/authorize
     resource:
       userInfoUri: http://localhost:9999/user
+
+custom:
+  auth-server:
+    username: resources-server
+    password: password
+    jwt-endpoint: http://localhost:9999/jwt
+
 logging:
   level:
     org.springframework.web: TRACE
