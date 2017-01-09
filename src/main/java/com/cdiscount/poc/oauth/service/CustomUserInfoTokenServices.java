@@ -42,7 +42,8 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
     @SuppressWarnings("unchecked")
     @Autowired
     public CustomUserInfoTokenServices(ResourceServerProperties sso, AuthServerSettings authServerSettings) {
-        this.userInfoEndpointUrl = authServerSettings.getJwtEndpoint();
+        //this.userInfoEndpointUrl = authServerSettings.getJwtEndpoint();
+        this.userInfoEndpointUrl = sso.getUserInfoUri();
         this.clientId = sso.getClientId();
 
         List interceptors = Collections.singletonList(new BasicAuthorizationInterceptor(
@@ -81,8 +82,7 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
      * @return the principal or {@literal "unknown"}
      */
     protected Object getPrincipal(Map<String, Object> map) {
-        Object principal = this.principalExtractor.extractPrincipal(map);
-        return (principal == null ? "unknown" : principal);
+        return map.get("user_name");
     }
 
     @Override
@@ -94,7 +94,7 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
     private Map<String, Object> getMap(String path, String accessToken) {
         this.logger.info("Getting user info from: " + path);
         try {
-            return restTemplate.getForEntity(path, Map.class).getBody();
+            return restTemplate.getForEntity(path, Map.class, accessToken).getBody();
         }
         catch (Exception ex) {
             this.logger.info("Could not fetch user details: " + ex.getClass() + ", "

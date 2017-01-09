@@ -4,13 +4,13 @@ security:
       accessTokenUri: http://localhost:9999/oauth/token
       userAuthorizationUri: http://localhost:9999/oauth/authorize
     resource:
-      userInfoUri: http://localhost:9999/user
+      userInfoUri: http://localhost:9999/user?token={token}
 
 custom:
   auth-server:
     username: resources-server
     password: password
-    jwt-endpoint: http://localhost:9999/jwt
+    jwt-endpoint: http://localhost:9999/jwt?token={token}
 
 logging:
   level:
